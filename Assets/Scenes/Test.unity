@@ -3700,6 +3700,7 @@ GameObject:
   - component: {fileID: 404369824853958688}
   - component: {fileID: 7130997790650319074}
   - component: {fileID: 7142159186555590648}
+  - component: {fileID: 7142159186555590649}
   m_Layer: 0
   m_Name: Bowl3
   m_TagString: Untagged
@@ -4379,6 +4380,7 @@ GameObject:
   - component: {fileID: 2855931184498417824}
   - component: {fileID: 1862876327006441649}
   - component: {fileID: 3995085370863029873}
+  - component: {fileID: 3995085370863029874}
   m_Layer: 0
   m_Name: Bowl4
   m_TagString: Untagged
@@ -7658,6 +7660,7 @@ GameObject:
   - component: {fileID: 7894640919666962682}
   - component: {fileID: 5782793575150442700}
   - component: {fileID: 3217065793164581202}
+  - component: {fileID: 7894640919666962683}
   m_Layer: 0
   m_Name: PRP_S05_Jumbotron_Screen_MO
   m_TagString: Untagged
@@ -12119,6 +12122,7 @@ GameObject:
   - component: {fileID: 3716463763621279326}
   - component: {fileID: 5792146305274999075}
   - component: {fileID: 8339681529950017184}
+  - component: {fileID: 8339681529950017185}
   m_Layer: 0
   m_Name: PRP_S05_Jumbotron_Screen_MO.001
   m_TagString: Untagged
@@ -14808,6 +14812,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3995085370863029874
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907925153461352226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1567902715485335010, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!33 &3995178512615739719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17943,6 +17961,7 @@ GameObject:
   - component: {fileID: 4582223938432792402}
   - component: {fileID: 8417820312334851950}
   - component: {fileID: 8861090362306884543}
+  - component: {fileID: 8861090362306884544}
   m_Layer: 0
   m_Name: Bowl1
   m_TagString: Untagged
@@ -20966,6 +20985,7 @@ GameObject:
   - component: {fileID: 6511190625503804980}
   - component: {fileID: 6780191237370057449}
   - component: {fileID: 1848304706189714416}
+  - component: {fileID: 6780191237370057450}
   m_Layer: 0
   m_Name: PRP_S05_Jumbotron_Screen_MO.002
   m_TagString: Untagged
@@ -22363,6 +22383,7 @@ GameObject:
   - component: {fileID: 537433289457992183}
   - component: {fileID: 8187415751051830341}
   - component: {fileID: 8592623273776640816}
+  - component: {fileID: 8592623273776640817}
   m_Layer: 0
   m_Name: Bowl2
   m_TagString: Untagged
@@ -23681,6 +23702,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5800407004336591567}
   m_Mesh: {fileID: -5542154266575607161, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
+--- !u!64 &6780191237370057450
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5800407004336591567}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5542154266575607161, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!4 &6784880489607180396
 Transform:
   m_ObjectHideFlags: 0
@@ -24707,6 +24742,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7142159186555590649
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712962518209386306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4172715801369385925, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!23 &7142355283369526730
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26756,6 +26805,20 @@ Transform:
   m_Father: {fileID: 3306513737365882884}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &7894640919666962683
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812485186405600606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7108462851185992758, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!4 &7895890032087239017
 Transform:
   m_ObjectHideFlags: 0
@@ -27884,6 +27947,7 @@ GameObject:
   - component: {fileID: 7978620494332203764}
   - component: {fileID: 1334830125418976864}
   - component: {fileID: 7957597948160416671}
+  - component: {fileID: 8277358087226828246}
   m_Layer: 0
   m_Name: PRP_S05_Jumbotron_Screen_MO.003
   m_TagString: Untagged
@@ -27891,6 +27955,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &8277358087226828246
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277358087226828245}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4353907398564906462, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!4 &8289517685136293246
 Transform:
   m_ObjectHideFlags: 0
@@ -28022,6 +28100,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8339681529950017185
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3168138030268536326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3064283341074790296, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!4 &8340291712764490147
 Transform:
   m_ObjectHideFlags: 0
@@ -28695,6 +28787,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8592623273776640817
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6302999413065092273}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 540327473608361880, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!4 &8593751608664979026
 Transform:
   m_ObjectHideFlags: 0
@@ -29889,6 +29995,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8861090362306884544
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4914340460196381349}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -66914921399700306, guid: 785d1826d2cbe7944857b285ec3a5baa, type: 3}
 --- !u!33 &8880300967783984963
 MeshFilter:
   m_ObjectHideFlags: 0
