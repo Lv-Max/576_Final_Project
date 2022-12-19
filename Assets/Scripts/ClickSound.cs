@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ClickSound : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip clickSound;
+    public AudioSource audioSource; 
 
-    void OnMouseDown()
+    public void Clicsound()
     {
-        audioSource.PlayOneShot(clickSound);
+        audioSource.Play();
     }
 }
