@@ -2,12 +2,13 @@
 // using System.Collections.Generic;
 // using UnityEngine;
 
-// public class ClickSound : MonoBehaviour
-// {
-//     public AudioSource audioSource;
+public class ClickSound : MonoBehaviour
+{
+    public AudioSource audioSource; 
 
-//     void OnMouseDown()
-//     {
-//         audioSource.PlayOneShot(audioClip);
-//     }
-// }
+    public void Clicsound()
+    {
+        audioSource.Play();
+    }
+}
+
