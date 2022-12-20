@@ -7,7 +7,7 @@ using System;
 
 public class PlayerNavMesh : MonoBehaviour
 {
-    [SerializeField] private Transform movePositionTransform;
+    public Vector3 movePosition;
     private Animator ani;
     private NavMeshAgent navMeshAgent;
     public bool linking;
@@ -25,7 +25,7 @@ public class PlayerNavMesh : MonoBehaviour
     private void Update()
     {
         ani.SetBool("Run", true);
-        navMeshAgent.destination = movePositionTransform.position;
+        navMeshAgent.destination = movePosition;
         if (!navMeshAgent.pathPending)
         {
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
