@@ -6,7 +6,6 @@ TagManager:
   tags:
   - CinemachineTarget
   - fruit
-  - robot
   layers:
   - Default
   - TransparentFX

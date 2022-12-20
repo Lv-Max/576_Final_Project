@@ -9,6 +9,9 @@ public class levelManager : MonoBehaviour
     public GameObject level2;
     public GameObject level3;
 
+    private bool l1 = false;
+    private bool l2 = false;
+    private bool l3 = false;
 
     //start level
     void startLevel(GameObject lv)
