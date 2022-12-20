@@ -13,7 +13,7 @@ public class level1 : MonoBehaviour
     public float TideSpeed = 2.0f;
     public GameObject[] boards;
     public GameObject b_control;
-    
+    public GameObject QuestionSymbol;
 
 
     internal bool drop = false;
@@ -26,6 +26,7 @@ public class level1 : MonoBehaviour
     private string question;
     private int answer;
     private int[] wrong_answer = new int[2];
+    private int[] wrong_board_idx;
 
     void Random_drop_fruit()
     {
@@ -86,6 +87,7 @@ public class level1 : MonoBehaviour
         timestamp_start = Time.time;
         num_fruit_generate = 5;
         num_correct_board = 3;
+        wrong_board_idx = new int[6-num_correct_board];
         for (int i = 0; i < num_fruit_generate; i++) 
         {
             Random_drop_fruit();
@@ -93,11 +95,23 @@ public class level1 : MonoBehaviour
         drop = true;
     }
 
+    //disable all tiles
     public void DisableTiles()
     {
         foreach (GameObject board in boards)
             board.SetActive(false);
     }
+
+    //disable all wrong tiles
+    public void DisableWrongTiles()
+    {
+        foreach (int idx in wrong_board_idx)
+            boards[idx].SetActive(false);
+    }
+
+
+
+
 
     void OnEnable()
     {
@@ -148,6 +162,8 @@ public class level1 : MonoBehaviour
         }
         Debug.Log(answer);
         Debug.Log(wrong_answer[0]);
+
+        StartCoroutine(SetQuestions());
     }
 
     void Start()
@@ -167,6 +183,8 @@ public class level1 : MonoBehaviour
                 // b_control.SetActive(true);
             }
         }
+        if (Time.time - timestamp_start > 13.0f)
+            DisableWrongTiles();
         
     }
 
@@ -194,11 +212,33 @@ public class level1 : MonoBehaviour
     }
 
 
-    IEnumerator WaitForSeconds(float delay)
+    // IEnumerator WaitForSeconds(float delay)
+    // {
+    //     yield return new WaitForSeconds(5);
+    // }
+
+
+    IEnumerator SetQuestions()
     {
         yield return new WaitForSeconds(5);
+        List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
+        //generate correct answer board
+        for (int i = 0; i < num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            //do correct board assign
+            Debug.Log("correct =" + boardidxs[index]);
+            boardidxs.RemoveAt(index);
+        }
+        //generate wrong answer board
+        for (int i = 0; i < 6 - num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            wrong_board_idx[i] = boardidxs[index];
+            Debug.Log(wrong_board_idx[i]);
+            boardidxs.RemoveAt(index);
+        }
     }
-
 
 }
 
