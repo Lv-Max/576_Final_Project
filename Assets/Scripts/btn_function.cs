@@ -20,6 +20,7 @@ public class btn_function : MonoBehaviour
     }
     public void return_to_main()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
     public void mute()
