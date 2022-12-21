@@ -16,6 +16,10 @@ public class levelManager : MonoBehaviour
     public GameObject player;
     public GameObject PauseMenu;
 
+    public AudioSource audioSource;
+    public AudioClip whistle;
+    public AudioClip tick;
+
     public float score = 0.0f;
     public int Num_remain = 7;
 
@@ -26,6 +30,7 @@ public class levelManager : MonoBehaviour
 
     private float timeStart = 0.0f;
     private float timePass = 0.0f;
+    private float SoundTime = 0.0f;
     // private float roundTimer = 0.0f;
     //start level
     void startLevel(GameObject lv)
@@ -89,12 +94,20 @@ public class levelManager : MonoBehaviour
         if (timePass <= 6)
         {
             Instruct.text = Mathf.Floor((6-timePass)).ToString() + "!";
+            //play tick sound
+            if (SoundTime > 1.0f)
+            {
+                SoundTime = 0.0f;
+                audioSource.PlayOneShot(tick);
+            }
         }
         //check if player is died
         if (is_die) 
             StartCoroutine(lose());
         else if (Num_remain == 1)
             StartCoroutine(win());
+
+
     }
 
     IEnumerator Game()
