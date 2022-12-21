@@ -277,19 +277,20 @@ public class level3 : MonoBehaviour
 
     IEnumerator TextInstruction()
     {
-        Instruct.text = "Count and Memorize fruit sum!";
+        Instruct.text = "Count the fruit!";
         yield return new WaitForSeconds(17);
         SetTileNum(true);
         QuestionCam.transform.Rotate(90, 0, 0);
         Instruct.text = "Stand on the board!";
         yield return new WaitForSeconds(5);
-        
+
         yield return new WaitForSeconds(6);
-        Instruct.text = "Pick the correct answer!";
+        Instruct.text = "Pick the answer!";
         yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(1);
         Instruct.text = "Correct!";
-        yield return new WaitForSeconds(7);
-        
+        yield return new WaitForSeconds(6);
+
         QuestionSymbol.GetComponent<TextMeshPro>().text = "";
         QuestionCam.transform.Rotate(-90, 0, 0);
         Instruct.text = "Wait for next round...";
@@ -297,23 +298,23 @@ public class level3 : MonoBehaviour
 
     IEnumerator GameInstruction()
     {
-        Instruct.text = "Count the fruit!";
         yield return new WaitForSeconds(17);
-        SetTileNum(true);
-        QuestionCam.transform.Rotate(90, 0, 0);
-        Instruct.text = "Stand on the board!";
-        yield return new WaitForSeconds(5);
-        
-        yield return new WaitForSeconds(6);
-        Instruct.text = "Pick the answer!";
+        EnableAllTiles();
+        SetQuestion();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
+        yield return new WaitForSeconds(11);
+
         yield return new WaitForSeconds(8);
-        yield return new WaitForSeconds(1);
-        Instruct.text = "Correct!";
-        yield return new WaitForSeconds(6);
-        
-        QuestionSymbol.GetComponent<TextMeshPro>().text = "";
-        QuestionCam.transform.Rotate(-90, 0, 0);
-        Instruct.text = "Wait for next round...";
+        DisableWrongTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
+        yield return new WaitForSeconds(8);
+        SetTileNum(false);
+        DisableTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
+        Destroy_fruits();
     }
 
     IEnumerator UpdateAI()

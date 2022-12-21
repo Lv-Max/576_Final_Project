@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class right_btn : MonoBehaviour
 {
@@ -30,16 +31,19 @@ public class right_btn : MonoBehaviour
         {
             GameObject.Find("Stage").GetComponent<TextMeshProUGUI>().text = "Stage #2";
             GameObject.Find("Instruction").GetComponent<TextMeshProUGUI>().text = "Stay on tile and find solution to the question on screen!";
+            GameObject.Find("GamePlay").GetComponent<Image>().sprite = Resources.Load<Sprite>("Stage2");
         }
         else if (stage == "2")
         {
             GameObject.Find("Stage").GetComponent<TextMeshProUGUI>().text = "Stage #3";
             GameObject.Find("Instruction").GetComponent<TextMeshProUGUI>().text = "Choose the tile with the right answer!";
+            GameObject.Find("GamePlay").GetComponent<Image>().sprite = Resources.Load<Sprite>("Stage3");
         }
         else if (stage == "3")
         {
             GameObject.Find("Stage").GetComponent<TextMeshProUGUI>().text = "Stage #4";
             GameObject.Find("Instruction").GetComponent<TextMeshProUGUI>().text = "Do not fall into water!";
+            GameObject.Find("GamePlay").GetComponent<Image>().sprite = Resources.Load<Sprite>("Stage4");
         }
 
     }
