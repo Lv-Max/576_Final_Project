@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.AI;
 using TMPro;
 
 public class level1 : MonoBehaviour
@@ -265,13 +266,19 @@ public class level1 : MonoBehaviour
     {
         yield return new WaitForSeconds(17);
         EnableAllTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         yield return new WaitForSeconds(11);
         SetQuestion();
         yield return new WaitForSeconds(8);
         DisableWrongTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         yield return new WaitForSeconds(8);
         SetTileNum(false);
         DisableTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         Destroy_fruits();
     }
 }
