@@ -35,4 +35,8 @@ public class btn_function : MonoBehaviour
             GameObject.Find("Checkmark").GetComponent<Image>().sprite = Resources.Load<Sprite>("mute");
         }
     }
+    public void resume_game()
+    {
+        Time.timeScale = 1;
+    }
 }
