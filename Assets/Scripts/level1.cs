@@ -171,7 +171,7 @@ public class level1 : MonoBehaviour
             foreach (GameObject AI in robots)
             {
                 float ran = Random.value;
-                if (ran > 0.8f)
+                if (ran > 0.95f)
                     AIdes(AI, boards[wrong_board_idx[i]].transform);
             }
         }

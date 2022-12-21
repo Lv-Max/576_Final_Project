@@ -2135,11 +2135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9999999
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.9999999
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2902,11 +2902,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.9999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5159228069126568913, guid: 1dacc378b7a85e64696e56ce8d0ce8a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3537,6 +3537,20 @@ MonoBehaviour:
   - {fileID: 515325163}
   - {fileID: 70779286}
   - {fileID: 1539775047}
+  robots:
+  - {fileID: 1009979536}
+  - {fileID: 1877375587}
+  - {fileID: 572088697}
+  - {fileID: 1370326503}
+  - {fileID: 257563458}
+  - {fileID: 109096968}
+  points:
+  - {fileID: 1723171227}
+  - {fileID: 558637605}
+  - {fileID: 950473076}
+  - {fileID: 240793385}
+  - {fileID: 844222007}
+  - {fileID: 193093123}
   Instruct: {fileID: 1932169060}
 --- !u!1 &441289000
 GameObject:
@@ -10912,6 +10926,7 @@ MonoBehaviour:
   losePop: {fileID: 1711398359}
   winPop: {fileID: 1595168673}
   player: {fileID: 7721969527396308558}
+  PauseMenu: {fileID: 0}
   score: 0
   Num_remain: 7
   Instruct: {fileID: 1932169060}
@@ -11808,6 +11823,20 @@ MonoBehaviour:
   - {fileID: 515325163}
   - {fileID: 70779286}
   - {fileID: 1539775047}
+  robots:
+  - {fileID: 1009979536}
+  - {fileID: 1877375587}
+  - {fileID: 572088697}
+  - {fileID: 1370326503}
+  - {fileID: 257563458}
+  - {fileID: 109096968}
+  points:
+  - {fileID: 1723171227}
+  - {fileID: 558637605}
+  - {fileID: 950473076}
+  - {fileID: 240793385}
+  - {fileID: 844222007}
+  - {fileID: 193093123}
   Instruct: {fileID: 1932169060}
 --- !u!1 &1659048319
 GameObject:
