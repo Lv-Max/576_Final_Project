@@ -29,8 +29,10 @@ namespace StarterAssets
         public float SpeedChangeRate = 10.0f;
 
         public AudioClip LandingAudioClip;
+        public AudioClip JumpingClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        [Range(0, 1)] public float JumpingClipAudioVolume = 0.5f;
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -78,6 +80,9 @@ namespace StarterAssets
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
+
+        // custom
+        private bool jump = false;
 
         // player
         private float _speed;
@@ -281,6 +286,7 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            
             if (Grounded)
             {
                 // reset the fall timeout timer
@@ -309,6 +315,12 @@ namespace StarterAssets
                     if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDJump, true);
+                        if (!jump)
+                        {
+                            AudioSource.PlayClipAtPoint(JumpingClip, transform.TransformPoint(_controller.center), JumpingClipAudioVolume);
+                            jump = true;
+                        }
+                        
                     }
                 }
 
@@ -322,7 +334,7 @@ namespace StarterAssets
             {
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
-
+                jump = false;
                 // fall timeout
                 if (_fallTimeoutDelta >= 0.0f)
                 {

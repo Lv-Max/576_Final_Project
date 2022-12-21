@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 139333493}
   - component: {fileID: 139333496}
   - component: {fileID: 139333495}
+  - component: {fileID: 139333497}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -278,6 +279,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 139333497}
+        m_TargetAssemblyTypeName: right_btn, Assembly-CSharp
+        m_MethodName: change_insrtuction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &139333497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139333491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3d6a12a960f24db9ed0d3499e5e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &209944542
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +653,7 @@ GameObject:
   - component: {fileID: 924700015}
   - component: {fileID: 924700014}
   - component: {fileID: 924700013}
+  - component: {fileID: 924700017}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -732,6 +758,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 924700017}
+        m_TargetAssemblyTypeName: left_btn, Assembly-CSharp
+        m_MethodName: change_insrtuction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &924700015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,6 +808,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924700011}
   m_CullTransparentMesh: 1
+--- !u!114 &924700017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924700011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344c0328a12b51e4281f3ca3f47df258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1135356127
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,7 +1008,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b71f8e811af90b41be1e162165dad2d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1805,7 +1855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Looking for the fruit droped from the sky!
+  m_text: Remember number each  fruit droped from the sky!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e7fa6e6bf18043548bc39e3024dcb555, type: 2}
   m_sharedMaterial: {fileID: 3127162009152017500, guid: e7fa6e6bf18043548bc39e3024dcb555, type: 2}
@@ -1832,7 +1882,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.05
+  m_fontSize: 36.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
