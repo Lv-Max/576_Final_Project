@@ -16,7 +16,7 @@ public class levelManager : MonoBehaviour
     public GameObject player;
     public GameObject PauseMenu;
 
-    public AudioSource audioSource;
+    public AudioSource bgm;
     public AudioClip whistle;
     public AudioClip tick;
 
@@ -31,6 +31,7 @@ public class levelManager : MonoBehaviour
     private float timeStart = 0.0f;
     private float timePass = 0.0f;
     private float SoundTime = 0.0f;
+    private bool has_whistled = false;
     // private float roundTimer = 0.0f;
     //start level
     void startLevel(GameObject lv)
@@ -95,11 +96,16 @@ public class levelManager : MonoBehaviour
         {
             Instruct.text = Mathf.Floor((6-timePass)).ToString() + "!";
             //play tick sound
-            if (SoundTime > 1.0f)
+            if (Time.time - SoundTime > 1.0f)
             {
-                SoundTime = 0.0f;
-                audioSource.PlayOneShot(tick);
+                SoundTime = Time.time;
+                AudioSource.PlayClipAtPoint(tick, player.transform.position, 1);
             }
+        }
+        else if (!has_whistled)
+        {
+            has_whistled = true;
+            AudioSource.PlayClipAtPoint(whistle, player.transform.position, 1);
         }
         //check if player is died
         if (is_die) 

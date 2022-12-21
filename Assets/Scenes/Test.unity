@@ -7976,7 +7976,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5fb4fd4a2c04c8840975ef15d081a0f3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.41
+  m_Volume: 0.206
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11749,6 +11749,9 @@ MonoBehaviour:
   winPop: {fileID: 1595168673}
   player: {fileID: 7721969527396308558}
   PauseMenu: {fileID: 163488996}
+  bgm: {fileID: 0}
+  whistle: {fileID: 8300000, guid: 127f3381b6d60d64db393a486d0356ca, type: 3}
+  tick: {fileID: 8300000, guid: 61414456d38009040805b0fe114ce461, type: 3}
   score: 0
   Num_remain: 7
   Instruct: {fileID: 1932169060}
