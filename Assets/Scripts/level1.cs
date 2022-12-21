@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class level1 : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class level1 : MonoBehaviour
     public GameObject[] boards;
     public GameObject b_control;
     public GameObject QuestionSymbol;
+
+    public TextMeshProUGUI Instruct;
+
 
 
     internal bool drop = false;
@@ -82,7 +86,6 @@ public class level1 : MonoBehaviour
 
     public void SetLevel()
     {
-        StartCoroutine(Tide_initialize(-20f));
         Reset_count();
         timestamp_start = Time.time;
         num_fruit_generate = 5;
@@ -109,15 +112,43 @@ public class level1 : MonoBehaviour
             boards[idx].SetActive(false);
     }
 
+    public void EnableAllTiles()
+    {
+        foreach (GameObject board in boards)
+        {
+            board.SetActive(true);
+            // b_control.SetActive(true);
+        }  
+    }
 
-
+    public void SetQuestion()
+    {
+        List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
+        //generate correct answer board
+        for (int i = 0; i < num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            //do correct board assign
+            Debug.Log("correct =" + boardidxs[index]);
+            boardidxs.RemoveAt(index);
+        }
+        //generate wrong answer board
+        for (int i = 0; i < 6 - num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            wrong_board_idx[i] = boardidxs[index];
+            Debug.Log(wrong_board_idx[i]);
+            boardidxs.RemoveAt(index);
+        }
+    }
 
 
     void OnEnable()
     {
-        DisableTiles();
-        Destroy_fruits();
         StartCoroutine(Tide_change(-14f));
+        StartCoroutine(Tide_initialize(-20f));
+        StartCoroutine(TextInstruction());
+        StartCoroutine(GameInstruction());
         SetLevel();
         
 
@@ -163,34 +194,17 @@ public class level1 : MonoBehaviour
         Debug.Log(answer);
         Debug.Log(wrong_answer[0]);
 
-        StartCoroutine(SetQuestions());
-    }
-
-    void Start()
-    {
-
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //bpard appears after time
-        if (Time.time - timestamp_start > 9.0f)
-        {
-            foreach (GameObject board in boards)
-            {
-                board.SetActive(true);
-                // b_control.SetActive(true);
-            }
-        }
-        if (Time.time - timestamp_start > 13.0f)
-            DisableWrongTiles();
-        
+    { 
+
     }
 
     IEnumerator Tide_change(float end)
     {
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(25);
         float x = water.transform.position.x;
         float z = water.transform.position.z;
         while (water.transform.position.y <= -14.1f)
@@ -202,6 +216,7 @@ public class level1 : MonoBehaviour
 
     IEnumerator Tide_initialize(float end)
     {
+        yield return new WaitForSeconds(42);
         float x = water.transform.position.x;
         float z = water.transform.position.z;
         while (water.transform.position.y >= -19.8f)
@@ -211,35 +226,31 @@ public class level1 : MonoBehaviour
         }
     }
 
-
-    // IEnumerator WaitForSeconds(float delay)
-    // {
-    //     yield return new WaitForSeconds(5);
-    // }
-
-
-    IEnumerator SetQuestions()
+    IEnumerator TextInstruction()
     {
-        yield return new WaitForSeconds(5);
-        List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
-        //generate correct answer board
-        for (int i = 0; i < num_correct_board; i++) 
-        {
-            int index = Random.Range(0, boardidxs.Count);
-            //do correct board assign
-            Debug.Log("correct =" + boardidxs[index]);
-            boardidxs.RemoveAt(index);
-        }
-        //generate wrong answer board
-        for (int i = 0; i < 6 - num_correct_board; i++) 
-        {
-            int index = Random.Range(0, boardidxs.Count);
-            wrong_board_idx[i] = boardidxs[index];
-            Debug.Log(wrong_board_idx[i]);
-            boardidxs.RemoveAt(index);
-        }
+        Instruct.text = "Count and Memorize fruit sum!";
+        yield return new WaitForSeconds(17);
+        Instruct.text = "Stand on the board!";
+        yield return new WaitForSeconds(11);
+        Instruct.text = "Pick the correct answer!";
+        yield return new WaitForSeconds(8);
+        Instruct.text = "Correct!";
+        yield return new WaitForSeconds(7);
+        Instruct.text = "Wait for next round...";
     }
 
+    IEnumerator GameInstruction()
+    {
+        yield return new WaitForSeconds(17);
+        EnableAllTiles();
+        yield return new WaitForSeconds(11);
+        SetQuestion();
+        yield return new WaitForSeconds(8);
+        DisableWrongTiles();
+        yield return new WaitForSeconds(8);
+        DisableTiles();
+        Destroy_fruits();
+    }
 }
 
 
