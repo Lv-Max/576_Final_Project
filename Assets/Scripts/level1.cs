@@ -8,6 +8,7 @@ using TMPro;
 public class level1 : MonoBehaviour
 {
     public GameObject[] fruits;
+    public GameObject[] small_fruits;
     public int[] fruit_count;
     public float height = 20.0f;
     public GameObject water;
@@ -15,7 +16,9 @@ public class level1 : MonoBehaviour
     public GameObject[] boards;
     public GameObject b_control;
     public GameObject QuestionSymbol;
-
+    public GameObject QuestionCam;
+    public GameObject[] boardAns;
+    
     public TextMeshProUGUI Instruct;
 
 
@@ -121,6 +124,12 @@ public class level1 : MonoBehaviour
         }  
     }
 
+    public void SetTileNum(bool b)
+    {
+        foreach (GameObject num in boardAns)
+            num.SetActive(b);
+    }
+
     public void SetQuestion()
     {
         List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
@@ -129,7 +138,7 @@ public class level1 : MonoBehaviour
         {
             int index = Random.Range(0, boardidxs.Count);
             //do correct board assign
-            Debug.Log("correct =" + boardidxs[index]);
+            boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = answer.ToString();
             boardidxs.RemoveAt(index);
         }
         //generate wrong answer board
@@ -138,6 +147,7 @@ public class level1 : MonoBehaviour
             int index = Random.Range(0, boardidxs.Count);
             wrong_board_idx[i] = boardidxs[index];
             Debug.Log(wrong_board_idx[i]);
+            boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = wrong_answer[Random.Range(0, 2)].ToString();
             boardidxs.RemoveAt(index);
         }
     }
@@ -157,12 +167,18 @@ public class level1 : MonoBehaviour
         int[] pickF = new int[2];
         int index = Random.Range(0, selectF.Length);
         pickF[0] = index;
+        GameObject fruit = Instantiate(small_fruits[index]);
+        fruit.name = small_fruits[index].name;
+        fruit.transform.position = new Vector3(45, -10, 6);
         while (true)
         {
             int i2 = Random.Range(0, selectF.Length);
             if (i2 != index) 
             {
                 pickF[1] = i2;
+                GameObject fruit2 = Instantiate(small_fruits[i2]);
+                fruit2.name = small_fruits[i2].name;
+                fruit2.transform.position = new Vector3(45, -10, 2);
                 break;
             }
         }
@@ -171,9 +187,11 @@ public class level1 : MonoBehaviour
         {
             case "+":
                 answer = fruit_count[pickF[0]] + fruit_count[pickF[1]];
+                QuestionSymbol.GetComponent<TextMeshPro>().text = "+";
                 break;
             case "-":
                 answer = fruit_count[pickF[0]] - fruit_count[pickF[1]];
+                QuestionSymbol.GetComponent<TextMeshPro>().text = "-";
                 break;
             default:
                 Debug.Log("unknown operator");
@@ -191,8 +209,7 @@ public class level1 : MonoBehaviour
                 }
             }
         }
-        Debug.Log(answer);
-        Debug.Log(wrong_answer[0]);
+
 
     }
 
@@ -232,10 +249,15 @@ public class level1 : MonoBehaviour
         yield return new WaitForSeconds(17);
         Instruct.text = "Stand on the board!";
         yield return new WaitForSeconds(11);
+        QuestionCam.transform.Rotate(90, 0, 0);
+        SetTileNum(true);
         Instruct.text = "Pick the correct answer!";
         yield return new WaitForSeconds(8);
         Instruct.text = "Correct!";
         yield return new WaitForSeconds(7);
+        
+        QuestionSymbol.GetComponent<TextMeshPro>().text = "";
+        QuestionCam.transform.Rotate(-90, 0, 0);
         Instruct.text = "Wait for next round...";
     }
 
@@ -248,6 +270,7 @@ public class level1 : MonoBehaviour
         yield return new WaitForSeconds(8);
         DisableWrongTiles();
         yield return new WaitForSeconds(8);
+        SetTileNum(false);
         DisableTiles();
         Destroy_fruits();
     }

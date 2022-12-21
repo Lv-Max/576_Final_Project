@@ -3,29 +3,37 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class level2 : MonoBehaviour
 {
     public GameObject[] fruits;
+    public GameObject[] small_fruits;
     public int[] fruit_count;
     public float height = 20.0f;
     public GameObject water;
     public float TideSpeed = 2.0f;
     public GameObject[] boards;
     public GameObject b_control;
+    public GameObject QuestionSymbol;
+    public GameObject QuestionCam;
+    public GameObject[] boardAns;
     
+    public TextMeshProUGUI Instruct;
+
 
 
     internal bool drop = false;
     internal bool end = false;
 
-    private string[] ops = {"+", "-"};
+    private string[] ops = {"+", "-", "*"};
     private float timestamp_start = 0.0f;
     private int num_fruit_generate;
     private int num_correct_board;
     private string question;
     private int answer;
     private int[] wrong_answer = new int[2];
+    private int[] wrong_board_idx;
 
     void Random_drop_fruit()
     {
@@ -81,11 +89,11 @@ public class level2 : MonoBehaviour
 
     public void SetLevel()
     {
-        StartCoroutine(Tide_initialize(-20f));
         Reset_count();
         timestamp_start = Time.time;
-        num_fruit_generate = 15;
+        num_fruit_generate = 8;
         num_correct_board = 2;
+        wrong_board_idx = new int[6-num_correct_board];
         for (int i = 0; i < num_fruit_generate; i++) 
         {
             Random_drop_fruit();
@@ -93,31 +101,84 @@ public class level2 : MonoBehaviour
         drop = true;
     }
 
+    //disable all tiles
     public void DisableTiles()
     {
         foreach (GameObject board in boards)
             board.SetActive(false);
     }
 
-    // Start is called before the first frame update
+    //disable all wrong tiles
+    public void DisableWrongTiles()
+    {
+        foreach (int idx in wrong_board_idx)
+            boards[idx].SetActive(false);
+    }
+
+    public void EnableAllTiles()
+    {
+        foreach (GameObject board in boards)
+        {
+            board.SetActive(true);
+            // b_control.SetActive(true);
+        }  
+    }
+
+    public void SetTileNum(bool b)
+    {
+        foreach (GameObject num in boardAns)
+            num.SetActive(b);
+    }
+
+    public void SetQuestion()
+    {
+        List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
+        //generate correct answer board
+        for (int i = 0; i < num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            //do correct board assign
+            boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = answer.ToString();
+            boardidxs.RemoveAt(index);
+        }
+        //generate wrong answer board
+        for (int i = 0; i < 6 - num_correct_board; i++) 
+        {
+            int index = Random.Range(0, boardidxs.Count);
+            wrong_board_idx[i] = boardidxs[index];
+            Debug.Log(wrong_board_idx[i]);
+            boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = wrong_answer[Random.Range(0, 2)].ToString();
+            boardidxs.RemoveAt(index);
+        }
+    }
+
+
     void OnEnable()
     {
-        DisableTiles();
-        Destroy_fruits();
         StartCoroutine(Tide_change(-14f));
+        StartCoroutine(Tide_initialize(-20f));
+        StartCoroutine(TextInstruction());
+        StartCoroutine(GameInstruction());
         SetLevel();
+        
 
         //random select 2 fruit and operator to generate answer
         int[] selectF = {0, 1, 2, 3};
         int[] pickF = new int[2];
         int index = Random.Range(0, selectF.Length);
         pickF[0] = index;
+        GameObject fruit = Instantiate(small_fruits[index]);
+        fruit.name = small_fruits[index].name;
+        fruit.transform.position = new Vector3(45, -10, 6);
         while (true)
         {
             int i2 = Random.Range(0, selectF.Length);
             if (i2 != index) 
             {
                 pickF[1] = i2;
+                GameObject fruit2 = Instantiate(small_fruits[i2]);
+                fruit2.name = small_fruits[i2].name;
+                fruit2.transform.position = new Vector3(45, -10, 2);
                 break;
             }
         }
@@ -126,9 +187,15 @@ public class level2 : MonoBehaviour
         {
             case "+":
                 answer = fruit_count[pickF[0]] + fruit_count[pickF[1]];
+                QuestionSymbol.GetComponent<TextMeshPro>().text = "+";
                 break;
             case "-":
                 answer = fruit_count[pickF[0]] - fruit_count[pickF[1]];
+                QuestionSymbol.GetComponent<TextMeshPro>().text = "-";
+                break;
+            case "*":
+                answer = fruit_count[pickF[0]] - fruit_count[pickF[1]];
+                QuestionSymbol.GetComponent<TextMeshPro>().text = "X";
                 break;
             default:
                 Debug.Log("unknown operator");
@@ -146,28 +213,19 @@ public class level2 : MonoBehaviour
                 }
             }
         }
-        Debug.Log(answer);
-        Debug.Log(wrong_answer[1]);
+
+
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //bpard appears after time
-        if (Time.time - timestamp_start > 9.0f)
-        {
-            foreach (GameObject board in boards)
-            {
-                board.SetActive(true);
-                // b_control.SetActive(true);
-            }
-        }
-        
+    { 
+
     }
 
     IEnumerator Tide_change(float end)
     {
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(25);
         float x = water.transform.position.x;
         float z = water.transform.position.z;
         while (water.transform.position.y <= -14.1f)
@@ -179,6 +237,7 @@ public class level2 : MonoBehaviour
 
     IEnumerator Tide_initialize(float end)
     {
+        yield return new WaitForSeconds(42);
         float x = water.transform.position.x;
         float z = water.transform.position.z;
         while (water.transform.position.y >= -19.8f)
@@ -188,13 +247,37 @@ public class level2 : MonoBehaviour
         }
     }
 
-
-    IEnumerator WaitForSeconds(float delay)
+    IEnumerator TextInstruction()
     {
-        yield return new WaitForSeconds(5);
+        Instruct.text = "Count and Memorize fruit sum!";
+        yield return new WaitForSeconds(17);
+        Instruct.text = "Stand on the board!";
+        yield return new WaitForSeconds(11);
+        QuestionCam.transform.Rotate(90, 0, 0);
+        SetTileNum(true);
+        Instruct.text = "Pick the correct answer!";
+        yield return new WaitForSeconds(8);
+        Instruct.text = "Correct!";
+        yield return new WaitForSeconds(7);
+        
+        QuestionSymbol.GetComponent<TextMeshPro>().text = "";
+        QuestionCam.transform.Rotate(-90, 0, 0);
+        Instruct.text = "Wait for next round...";
     }
 
-
+    IEnumerator GameInstruction()
+    {
+        yield return new WaitForSeconds(17);
+        EnableAllTiles();
+        yield return new WaitForSeconds(11);
+        SetQuestion();
+        yield return new WaitForSeconds(8);
+        DisableWrongTiles();
+        yield return new WaitForSeconds(8);
+        SetTileNum(false);
+        DisableTiles();
+        Destroy_fruits();
+    }
 }
 
 
@@ -209,3 +292,50 @@ public class level2 : MonoBehaviour
 		// fruits[7].transform.RotateAround (Vector3.up, -Time.deltaTime);
 		// fruits[8].transform.RotateAround (Vector3.up, Time.deltaTime);
 		// fruits[9].transform.RotateAround (Vector3.up, -Time.deltaTime);
+
+
+        // Destroy_fruits();
+        // StartCoroutine(Tide_change(-14f));
+        // SetLevel();
+
+        // //random select 2 fruit and operator to generate answer
+        // int[] selectF = {0, 1, 2};
+        // int[] pickF = new int[2];
+        // int index = Random.Range(0, selectF.Length);
+        // pickF[0] = index;
+        // while (true)
+        // {
+        //     int i2 = Random.Range(0, selectF.Length);
+        //     if (i2 != index) 
+        //     {
+        //         pickF[1] = i2;
+        //         break;
+        //     }
+        // }
+        // string op = ops[Random.Range(0, ops.Length)];
+        // switch (op)
+        // {
+        //     case "+":
+        //         answer = fruit_count[pickF[0]] + fruit_count[pickF[1]];
+        //         break;
+        //     case "-":
+        //         answer = fruit_count[pickF[0]] - fruit_count[pickF[1]];
+        //         break;
+        //     default:
+        //         Debug.Log("unknown operator");
+        //         break;
+        // }
+        // for (int i = 0; i < wrong_answer.Length; i++)
+        // {
+        //     while (true)
+        //     {
+        //         int temp = Random.Range(answer - 5, answer + 10);
+        //         if (temp != answer)
+        //         {
+        //             wrong_answer[i] = Random.Range(answer - 5, answer + 10);
+        //             break;
+        //         }
+        //     }
+        // }
+        // Debug.Log(answer);
+        // Debug.Log(wrong_answer[0]);

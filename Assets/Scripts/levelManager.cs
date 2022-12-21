@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class levelManager : MonoBehaviour
 {
@@ -9,14 +10,21 @@ public class levelManager : MonoBehaviour
     public GameObject level1;
     public GameObject level2;
     public GameObject level3;
+    public GameObject losePop;
+    public GameObject winPop;
+    public GameObject player;
+
+    public float score = 0.0f;
     public int Num_remain = 7;
 
     public TextMeshProUGUI Instruct;
     public TextMeshProUGUI remain;
     public TextMeshProUGUI point;
 
+
     private float timeStart = 0.0f;
     private float timePass = 0.0f;
+    // private float roundTimer = 0.0f;
     //start level
     void startLevel(GameObject lv)
     {
@@ -27,13 +35,23 @@ public class levelManager : MonoBehaviour
         lv.SetActive(true);
     }
 
-
+    public void Pause()
+    {
+        player.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time. timeScale = 0;
+    }
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // foreach(var component in player.GetComponents<Component>())
+        // {
+        //     Debug.Log(component);
+        // }
         StartCoroutine(Game());
     }
 
@@ -41,14 +59,22 @@ public class levelManager : MonoBehaviour
     void Update()
     {
         timePass = Time.time - timeStart;
-        remain.text = Num_remain.ToString()+ "/7";
-        point.text = Mathf.Floor((Mathf.Max(timePass - 6, 0))*50).ToString() + "pts";
+        if (!is_die | Num_remain == 1)
+        {
+            score = Mathf.Floor((Mathf.Max(timePass - 6, 0))*35);
+            remain.text = Mathf.Max(Num_remain, 0).ToString()+ "/7";
+            point.text = score.ToString() + "pts";
+        }
+
         if (timePass <= 6)
         {
             Instruct.text = Mathf.Floor((6-timePass)).ToString() + "!";
         }
         //check if player is died
-
+        if (is_die) 
+            StartCoroutine(lose());
+        else if (Num_remain == 1)
+            StartCoroutine(win());
     }
 
     IEnumerator Game()
@@ -57,14 +83,36 @@ public class levelManager : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             startLevel(level1);
-            yield return new WaitForSeconds(60);
+            yield return new WaitForSeconds(50);
         }
         startLevel(level2);
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(50);
         while (!is_die)
         {
             startLevel(level3);
-            yield return new WaitForSeconds(60);
+            yield return new WaitForSeconds(50);
         }
+    }
+
+    IEnumerator win() 
+    {
+        Instruct.gameObject.SetActive(false);
+        winPop.transform.GetChild(1).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString() + "pts";
+        winPop.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        Pause();
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("Menu");
+    }
+
+    IEnumerator lose() 
+    {
+        Instruct.gameObject.SetActive(false);
+        losePop.transform.GetChild(1).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString() + "pts";
+        losePop.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        Pause();
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("Menu");
     }
 }

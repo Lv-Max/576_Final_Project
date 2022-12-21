@@ -21,8 +21,8 @@ public class water : MonoBehaviour
         }
         if (C.gameObject.tag == "Player")
         {
-            levelM.GetComponent<levelManager>().is_die = true;
             levelM.GetComponent<levelManager>().Num_remain -= 1;
+            levelM.GetComponent<levelManager>().is_die = true;
         }
     }
 
