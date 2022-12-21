@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.AI;
 using TMPro;
 
 public class level3 : MonoBehaviour
@@ -18,8 +19,15 @@ public class level3 : MonoBehaviour
     public GameObject QuestionSymbol;
     public GameObject QuestionCam;
     public GameObject[] boardAns;
+    public GameObject[] robots;
+    public GameObject[] points;
     
     public TextMeshProUGUI Instruct;
+
+
+
+    internal bool drop = false;
+    internal bool end = false;
 
     private string[] ops = {"+", "-", "*"};
     private float timestamp_start = 0.0f;
@@ -93,6 +101,13 @@ public class level3 : MonoBehaviour
         {
             Random_drop_fruit();
         }
+        drop = true;
+    }
+
+    //AI destination
+    private void AIdes(GameObject AI, Transform des)
+    {
+        AI.GetComponent<PlayerNavMesh>().movePosition = des;
     }
 
     //disable all tiles
@@ -124,6 +139,14 @@ public class level3 : MonoBehaviour
             num.SetActive(b);
     }
 
+    public void SetRobotPoint()
+    {
+        foreach (GameObject AI in robots)
+        {
+            AI.GetComponent<PlayerNavMesh>().movePosition = points[System.Array.IndexOf(robots, AI)].transform;
+        }
+    }
+
     public void SetQuestion()
     {
         List<int> boardidxs = new List<int>() {0, 1, 2, 3, 4, 5};
@@ -132,6 +155,8 @@ public class level3 : MonoBehaviour
         {
             int index = Random.Range(0, boardidxs.Count);
             //do correct board assign
+            foreach (GameObject AI in robots)
+                AIdes(AI, boards[boardidxs[index]].transform);
             boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = answer.ToString();
             boardidxs.RemoveAt(index);
         }
@@ -143,6 +168,12 @@ public class level3 : MonoBehaviour
             Debug.Log(wrong_board_idx[i]);
             boardAns[boardidxs[index]].GetComponent<TextMeshPro>().text = wrong_answer[Random.Range(0, 2)].ToString();
             boardidxs.RemoveAt(index);
+            foreach (GameObject AI in robots)
+            {
+                float ran = Random.value;
+                if (ran > 0.8f)
+                    AIdes(AI, boards[wrong_board_idx[i]].transform);
+            }
         }
     }
 
@@ -154,10 +185,13 @@ public class level3 : MonoBehaviour
         StartCoroutine(TextInstruction());
         StartCoroutine(GameInstruction());
         SetLevel();
-        
+        SetRobotPoint();
+        StartCoroutine(UpdateAI());
+
+
 
         //random select 2 fruit and operator to generate answer
-        int[] selectF = {0, 1, 2, 3, 4, 5};
+        int[] selectF = {0, 1, 2, 3};
         int[] pickF = new int[2];
         int index = Random.Range(0, selectF.Length);
         pickF[0] = index;
@@ -188,7 +222,7 @@ public class level3 : MonoBehaviour
                 QuestionSymbol.GetComponent<TextMeshPro>().text = "-";
                 break;
             case "*":
-                answer = fruit_count[pickF[0]] - fruit_count[pickF[1]];
+                answer = fruit_count[pickF[0]] * fruit_count[pickF[1]];
                 QuestionSymbol.GetComponent<TextMeshPro>().text = "X";
                 break;
             default:
@@ -202,7 +236,7 @@ public class level3 : MonoBehaviour
                 int temp = Random.Range(answer - 5, answer + 10);
                 if (temp != answer)
                 {
-                    wrong_answer[i] = Random.Range(answer - 5, answer + 10);
+                    wrong_answer[i] = temp;
                     break;
                 }
             }
@@ -245,10 +279,12 @@ public class level3 : MonoBehaviour
     {
         Instruct.text = "Count and Memorize fruit sum!";
         yield return new WaitForSeconds(17);
-        Instruct.text = "Stand on the board!";
-        yield return new WaitForSeconds(11);
-        QuestionCam.transform.Rotate(90, 0, 0);
         SetTileNum(true);
+        QuestionCam.transform.Rotate(90, 0, 0);
+        Instruct.text = "Stand on the board!";
+        yield return new WaitForSeconds(5);
+        
+        yield return new WaitForSeconds(6);
         Instruct.text = "Pick the correct answer!";
         yield return new WaitForSeconds(8);
         Instruct.text = "Correct!";
@@ -263,15 +299,48 @@ public class level3 : MonoBehaviour
     {
         yield return new WaitForSeconds(17);
         EnableAllTiles();
-        yield return new WaitForSeconds(11);
         SetQuestion();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
+        yield return new WaitForSeconds(11);
+        
         yield return new WaitForSeconds(8);
         DisableWrongTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         yield return new WaitForSeconds(8);
         SetTileNum(false);
         DisableTiles();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         Destroy_fruits();
     }
+
+    IEnumerator UpdateAI()
+    {
+        while (true)
+        {
+            int count = 0;
+            foreach (GameObject point in points)
+            {
+                Vector3 randomDirection = Random.insideUnitSphere * 15;
+                float x = randomDirection.x;
+                float y = -15f;
+                float z = randomDirection.z;
+                point.transform.position = new Vector3(x, y, z);
+                float ran = Random.value;
+                if (ran > 0.8f)
+                    point.transform.position = robots[count].transform.position;
+                if (ran < 0.2f)
+                    point.transform.position = GameObject.Find("PlayerArmature").transform.position;
+                count++;
+                
+            }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+
 }
 
 

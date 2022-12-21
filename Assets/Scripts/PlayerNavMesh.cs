@@ -7,7 +7,7 @@ using System;
 
 public class PlayerNavMesh : MonoBehaviour
 {
-    public Vector3 movePosition;
+    public Transform movePosition;
     private Animator ani;
     private NavMeshAgent navMeshAgent;
     public bool linking;
@@ -25,7 +25,11 @@ public class PlayerNavMesh : MonoBehaviour
     private void Update()
     {
         ani.SetBool("Run", true);
-        navMeshAgent.destination = movePosition;
+        // Vector2 randomDirection = UnityEngine.Random.insideUnitSphere * 2;
+        // float x = movePosition.position.x+randomDirection.x;
+        // float y = movePosition.position.y;
+        // float z = movePosition.position.z + randomDirection.y;
+        navMeshAgent.destination = movePosition.position;
         if (!navMeshAgent.pathPending)
         {
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)

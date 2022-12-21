@@ -14,6 +14,7 @@ public class levelManager : MonoBehaviour
     public GameObject losePop;
     public GameObject winPop;
     public GameObject player;
+    public GameObject PauseMenu;
 
     public float score = 0.0f;
     public int Num_remain = 7;
@@ -44,6 +45,13 @@ public class levelManager : MonoBehaviour
         Time. timeScale = 0;
     }
 
+    public void Resume()
+    {
+        player.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Time. timeScale = 1;
+    }
 
 
     // Start is called before the first frame update
@@ -53,6 +61,7 @@ public class levelManager : MonoBehaviour
         // {
         //     Debug.Log(component);
         // }
+        Resume();
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
         StartCoroutine(Game());
@@ -62,6 +71,12 @@ public class levelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+            // PauseMenu.SetActive(true);
+        }
+
         timePass = Time.time - timeStart;
         if (!is_die | Num_remain == 1)
         {

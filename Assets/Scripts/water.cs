@@ -16,7 +16,7 @@ public class water : MonoBehaviour
 
         if (C.gameObject.tag == "robot")
         {
-            Destroy(C.gameObject);
+            C.gameObject.SetActive(false);
             levelM.GetComponent<levelManager>().Num_remain -= 1;
         }
         if (C.gameObject.tag == "Player")
