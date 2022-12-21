@@ -49,8 +49,9 @@ public class levelManager : MonoBehaviour
     {
         player.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Locked;
         Time. timeScale = 1;
+        PauseMenu.SetActive(false);
     }
 
 
@@ -74,7 +75,7 @@ public class levelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
-            // PauseMenu.SetActive(true);
+            PauseMenu.SetActive(true);
         }
 
         timePass = Time.time - timeStart;
