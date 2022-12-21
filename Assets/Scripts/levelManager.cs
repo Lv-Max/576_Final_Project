@@ -56,6 +56,7 @@ public class levelManager : MonoBehaviour
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
         StartCoroutine(Game());
+        timeStart = Time.time;
     }
 
     // Update is called once per frame
